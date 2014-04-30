@@ -55,7 +55,11 @@ module Locobot
       end
 
       def place x, y, orientation
-        self.error = STATUS::NO_TABLE and return unless @table
+        unless no_table?
+          self.x = x
+          self.y = y
+          self.orientation = orientation
+        end
       end
 
       def move
@@ -76,6 +80,17 @@ module Locobot
 
       # Internal methods
 
+      # Sets status to NO_TABLE if there's no table
+      def no_table?
+        if @table
+          false
+        else
+          self.error = STATUS::NO_TABLE
+          true
+        end
+      end
+
+      # Sets status to NOT_PLACED unless placed
       def check_placement
         self.error = STATUS::NOT_PLACED and return unless self.x and self.y and self.orientation
       end

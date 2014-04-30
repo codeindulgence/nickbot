@@ -36,4 +36,15 @@ describe Locobot do
     end
   end
 
+  describe "when placed on a table" do
+    it "has a position and orientation" do
+      x, y, orientation = [0, 0, NORTH]
+      @locobot.table = Table.new 5, 5
+      @locobot.execute('PLACE', x, y, orientation)
+      @locobot.x.must_equal x
+      @locobot.y.must_equal y
+      @locobot.orientation.must_equal orientation
+    end
+  end
+
 end
