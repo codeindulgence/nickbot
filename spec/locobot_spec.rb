@@ -20,8 +20,17 @@ describe Locobot do
     end
   end
 
-  describe "when asked to report before placing" do
+  describe "when asked to report, move or turn before placing" do
     it "tells me it has not been placed" do
+      @locobot.execute('MOVE').must_be_nil
+      @locobot.error.must_equal NOT_PLACED
+
+      @locobot.execute('LEFT').must_be_nil
+      @locobot.error.must_equal NOT_PLACED
+
+      @locobot.execute('RIGHT').must_be_nil
+      @locobot.error.must_equal NOT_PLACED
+
       @locobot.execute('REPORT').must_be_nil
       @locobot.error.must_equal NOT_PLACED
     end

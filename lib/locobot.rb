@@ -10,8 +10,10 @@ module Locobot
   end
 
   module STATUS
-    NO_TABLE = 0
-    NOT_PLACED = 1
+    READY = "READY"
+    NO_TABLE = "NO TABLE"
+    NOT_PLACED = "NOT PLACED"
+    SHUTTINGDOWN = "SHUTTINGDOWN"
   end
 
   module ORIENTATIONS
@@ -23,12 +25,8 @@ module Locobot
 
   class Robot
 
-    MODES    = %w{READY SHUTTINGDOWN}
-
     def initialize
-      @status = MODES.first
-      @table = nil
-      @error = nil
+      @status = STATUS::READY
     end
 
     attr_accessor :x, :y, :orientation, :table, :error
@@ -42,11 +40,14 @@ module Locobot
     end
 
     def shutting_down?
-      @status == MODES.last
+      @status == MODES::SHUTTINGDOWN
     end
 
     private
 
+      # MAIN COMMANDS
+
+      # Describe acceptable robot commands
       def help
         Locobot::COMMANDS.constants.map do |command|
           "#{command}\t#{Locobot::COMMANDS.const_get command}"
@@ -57,8 +58,26 @@ module Locobot
         self.error = STATUS::NO_TABLE and return unless @table
       end
 
+      def move
+        check_placement
+      end
+
+      def left
+        check_placement
+      end
+
+      def right
+        check_placement
+      end
+
       def report
-        self.error = STATUS::NOT_PLACED and return unless self.x and self.y
+        check_placement
+      end
+
+      # Internal methods
+
+      def check_placement
+        self.error = STATUS::NOT_PLACED and return unless self.x and self.y and self.orientation
       end
 
       def unknown_command command
