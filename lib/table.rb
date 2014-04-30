@@ -1,5 +1,7 @@
 class Table
 
+  attr_accessor :width, :height
+
   # Parameters
   # width: Fixnum
   # height: Fixnum
@@ -12,6 +14,10 @@ class Table
   # Returns String of format "<width>x<height>"
   def size
     "#{@width}x#{@height}"
+  end
+
+  def coordinate_exists? x, y
+    x < @width and y < @height
   end
 
   # Accepts x and y coordinates
