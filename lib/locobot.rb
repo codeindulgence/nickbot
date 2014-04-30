@@ -57,6 +57,10 @@ module Locobot
         self.error = STATUS::NO_TABLE and return unless @table
       end
 
+      def report
+        self.error = STATUS::NOT_PLACED and return unless self.x and self.y
+      end
+
       def unknown_command command
         "Unknown command: #{command}".upcase
       end

@@ -20,4 +20,11 @@ describe Locobot do
     end
   end
 
+  describe "when asked to report before placing" do
+    it "tells me it has not been placed" do
+      @locobot.execute('REPORT').must_be_nil
+      @locobot.error.must_equal NOT_PLACED
+    end
+  end
+
 end
