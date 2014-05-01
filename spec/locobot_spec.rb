@@ -25,7 +25,7 @@ describe Locobot do
 
   describe "when placed without a table" do
     it "tells me it needs a tabletop" do
-      @locobot.execute('PLACE 0, 0, NORTH').must_be_nil
+      @locobot.execute('PLACE 0,0,NORTH').must_be_nil
       @locobot.error.must_equal NO_TABLE
     end
   end
@@ -51,8 +51,8 @@ describe Locobot do
 
     it "doesn't allow positions out of range" do
       @locobot.table = Table.new 5, 5
-      @locobot.execute('PLACE 0 6 NORTH').must_be_nil
-      @locobot.execute('PLACE 6 0 NORTH').must_be_nil
+      @locobot.execute('PLACE 0,6,NORTH').must_be_nil
+      @locobot.execute('PLACE 6,0,NORTH').must_be_nil
     end
 
     it "has a position and orientation" do
@@ -73,17 +73,17 @@ describe Locobot do
 
     it "can move if possible" do
       @locobot.table = Table.new 5, 5
-      @locobot.execute("PLACE 0 0 EAST").wont_be_nil
+      @locobot.execute("PLACE 0,0,EAST").wont_be_nil
       @locobot.execute('MOVE').must_equal COMMAND_SUCCESSFUL
       @locobot.placement.must_equal Placement.new(1, 0, EAST)
-      @locobot.execute("PLACE 0 0 WEST").wont_be_nil
+      @locobot.execute("PLACE 0,0,WEST").wont_be_nil
       @locobot.execute('MOVE').must_be_nil
       @locobot.error.must_equal MOVEMENT_IMPOSSIBLE
     end
 
     it "can turn" do
       @locobot.table = Table.new 5, 5
-      @locobot.execute("PLACE 0 0 NORTH").wont_be_nil
+      @locobot.execute("PLACE 0,0,NORTH").wont_be_nil
 
       @locobot.execute("RIGHT").wont_be_nil
       @locobot.placement.orientation.must_equal EAST

@@ -32,7 +32,7 @@ module Locobot
     attr_accessor :placement, :table, :error
 
     def execute command
-        command, *args = command.split ' '
+        command, *args = command.split(/[ ,]/)
         if Locobot::COMMANDS.constants.include? command.to_sym
           unless no_table?
             self.send command.downcase, *args
