@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require './lib/placement'
 
 include Locobot
@@ -13,6 +14,42 @@ class Table
   def initialize width, height
     @width = width
     @height = height
+  end
+
+  # Output as grid with optional Placement
+  def to_s x = nil, y = nil
+    # Top border and start of first row
+    grid = "\n" + '╔' + ('═══╤'*(width-1)) + '═══╗' + "\n" +
+                  '║'
+
+    # First row
+    # For each column over 1 add cell part and mark if necessary
+    (self.width - 1).times do |column|
+      mark = (x == column and y == (self.height - 1)) ? '◼' : ' '
+      grid += " #{mark} │"
+    end
+
+    # Top right corner
+    grid += " #{(x == (self.width - 1) and y == (self.height - 1)) ? '◼':' '} ║" + "\n"
+
+    # Additional rows
+    (self.height - 1).times do |row|
+      grid +=     '╟' + ('───┼'*(width-1)) + '───╢' + "\n" +
+                  '║'
+      # Additional cells in these rows
+      (self.width - 1).times do |column|
+        mark = (x == column and y == (self.height - row - 2)) ? '◼' : ' '
+        grid += " #{mark} │"
+      end
+
+      # Bottom right corner
+      grid += " #{(x == (self.width - 1) and y == (self.height - row - 2)) ? '◼':' '} ║" + "\n"
+
+    end
+
+    # Bottom border
+    grid += '╚' + ('═══╧'*(width-1)) + '═══╝' + "\n"
+
   end
 
   # No arguments
