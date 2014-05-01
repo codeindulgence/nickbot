@@ -36,6 +36,8 @@ def prompt
   say coloured('FLUSHING DATABANKS...', :RED)
   sleep 0.4
   say coloured('GOOD BYE', :GREEN)
+
+  exit
 end
 
 say coloured('LOCOBOT INITIALIZING ', :RED)
