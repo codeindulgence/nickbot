@@ -17,11 +17,13 @@ def prompt
     q.readline = true
   end
 
+  puts `clear`
+
   unless command.empty?
     response = @locobot.execute(command)
 
     if response
-      say @locobot.table.to_s @locobot.placement
+      say @locobot.table.to_s(@locobot.placement) if @locobot.placement
       say coloured("#{response}", :GREEN)
     else
       say coloured("ERROR: #{@locobot.error}", :RED)
