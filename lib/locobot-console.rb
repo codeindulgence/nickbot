@@ -33,4 +33,17 @@ def prompt
   prompt unless @locobot.shutting_down?
 end
 
+say coloured('LOCOBOT INITIALIZING ', :RED)
+10.times do
+  say coloured('. ', :RED)
+  sleep 0.25
+end
+puts
+say 'LOCOBOT SYSTEMS READY'
+sleep 1
+say 'PLEASE OBSERVE COMMANDS LIST:'
+sleep 0.2
+
+say coloured(@locobot.execute('HELP'), :GREEN)
+
 prompt
