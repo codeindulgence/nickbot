@@ -1,0 +1,12 @@
+Welcome to Locobot!
+===================
+
+By Nick Butler  
+nick@codeindulgence.com
+
+The only dependency is highline for the CLI
+so a bundle install might be necessary
+
+Other than that, just run ./bin/locobot
+
+Enjoy!
