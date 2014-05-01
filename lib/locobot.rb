@@ -82,7 +82,7 @@ module Locobot
       end
 
       def report
-        check_placement
+        check_placement and placement.to_s
       end
 
       # Internal methods
@@ -103,7 +103,11 @@ module Locobot
 
       # Sets status to NOT_PLACED unless placed
       def check_placement
-        self.error = STATUS::NOT_PLACED and return unless self.placement and self.placement.valid?
+        unless self.placement and self.placement.valid?
+          self.error = STATUS::NOT_PLACED and return
+        else
+          true
+        end
       end
 
       # Hangle unrecognised commands

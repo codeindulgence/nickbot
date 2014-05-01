@@ -48,6 +48,7 @@ describe Locobot do
   end
 
   describe "when placed on a table" do
+
     it "doesn't allow positions out of range" do
       @locobot.table = Table.new 5, 5
       @locobot.execute('PLACE 0 6 NORTH').must_be_nil
@@ -61,6 +62,13 @@ describe Locobot do
       @locobot.placement.x.must_equal x
       @locobot.placement.y.must_equal y
       @locobot.placement.orientation.must_equal orientation
+    end
+
+    it "can report it's position" do
+      x, y, orientation = [2, 4, 'WEST']
+      @locobot.table = Table.new 5, 5
+      @locobot.execute("PLACE #{x} #{y} #{orientation}")
+      @locobot.execute('REPORT').must_equal "CURRENT POSITION: #{x},#{y}\nFACING: #{orientation}"
     end
   end
 
