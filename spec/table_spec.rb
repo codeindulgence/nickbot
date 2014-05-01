@@ -90,26 +90,26 @@ describe Table do
 
   describe "when converted to a string with a coordinate" do
     it "returns an ASCII grid marking the coordinate" do
-      Table.new(1, 1).to_s(0, 0).must_equal <<-EOS
+      Table.new(1, 1).to_s(Placement.new(0, 0, EAST)).must_equal <<-EOS
 
 ╔═══╗
-║ ◼ ║
+║ ▶ ║
 ╚═══╝
       EOS
 
-      Table.new(2, 2).to_s(1, 0).must_equal <<-EOS
+      Table.new(2, 2).to_s(Placement.new(1, 0, NORTH)).must_equal <<-EOS
 
 ╔═══╤═══╗
 ║   │   ║
 ╟───┼───╢
-║   │ ◼ ║
+║   │ ▲ ║
 ╚═══╧═══╝
       EOS
 
-      Table.new(3, 3).to_s(1, 2).must_equal <<-EOS
+      Table.new(3, 3).to_s(Placement.new(1, 2, WEST)).must_equal <<-EOS
 
 ╔═══╤═══╤═══╗
-║   │ ◼ │   ║
+║   │ ◀ │   ║
 ╟───┼───┼───╢
 ║   │   │   ║
 ╟───┼───┼───╢
@@ -117,14 +117,14 @@ describe Table do
 ╚═══╧═══╧═══╝
       EOS
 
-      Table.new(12, 6).to_s(7, 3).must_equal <<-EOS
+      Table.new(12, 6).to_s(Placement.new(7, 3, SOUTH)).must_equal <<-EOS
 
 ╔═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╤═══╗
 ║   │   │   │   │   │   │   │   │   │   │   │   ║
 ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
 ║   │   │   │   │   │   │   │   │   │   │   │   ║
 ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
-║   │   │   │   │   │   │   │ ◼ │   │   │   │   ║
+║   │   │   │   │   │   │   │ ▼ │   │   │   │   ║
 ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢
 ║   │   │   │   │   │   │   │   │   │   │   │   ║
 ╟───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───┼───╢

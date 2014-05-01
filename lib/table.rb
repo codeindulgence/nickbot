@@ -17,7 +17,19 @@ class Table
   end
 
   # Output as grid with optional Placement
-  def to_s x = nil, y = nil
+  def to_s placement = nil
+    if placement
+      x = placement.x
+      y = placement.y
+      orientation = placement.orientation
+      pointer = case orientation
+        when NORTH then '▲'
+        when EAST  then '▶'
+        when SOUTH then '▼'
+        when WEST  then '◀'
+      end
+    end
+
     # Top border and start of first row
     grid = "\n" + '╔' + ('═══╤'*(width-1)) + '═══╗' + "\n" +
                   '║'
@@ -25,12 +37,12 @@ class Table
     # First row
     # For each column over 1 add cell part and mark if necessary
     (self.width - 1).times do |column|
-      mark = (x == column and y == (self.height - 1)) ? '◼' : ' '
+      mark = (x == column and y == (self.height - 1)) ? pointer : ' '
       grid += " #{mark} │"
     end
 
     # Top right corner
-    grid += " #{(x == (self.width - 1) and y == (self.height - 1)) ? '◼':' '} ║" + "\n"
+    grid += " #{(x == (self.width - 1) and y == (self.height - 1)) ? pointer:' '} ║" + "\n"
 
     # Additional rows
     (self.height - 1).times do |row|
@@ -38,12 +50,12 @@ class Table
                   '║'
       # Additional cells in these rows
       (self.width - 1).times do |column|
-        mark = (x == column and y == (self.height - row - 2)) ? '◼' : ' '
+        mark = (x == column and y == (self.height - row - 2)) ? pointer : ' '
         grid += " #{mark} │"
       end
 
       # Bottom right corner
-      grid += " #{(x == (self.width - 1) and y == (self.height - row - 2)) ? '◼':' '} ║" + "\n"
+      grid += " #{(x == (self.width - 1) and y == (self.height - row - 2)) ? pointer:' '} ║" + "\n"
 
     end
 
