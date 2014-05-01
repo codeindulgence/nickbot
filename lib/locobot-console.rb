@@ -12,7 +12,10 @@ def coloured string, colour
 end
 
 def prompt
-  command = ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) { |q| q.case = :upcase }
+  command = ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) do |q|
+    q.case = :upcase
+    q.readline = true
+  end
 
   unless command.empty?
     response = @locobot.execute(command)
