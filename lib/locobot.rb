@@ -11,6 +11,7 @@ module Locobot
     LEFT   = 'Rotate 90 degrees left'
     RIGHT  = 'Rotate 90 degrees right'
     REPORT = 'Announce current position and orientation'
+    EXIT   = 'Shut down Locobot'
   end
 
   module STATUS
@@ -26,25 +27,27 @@ module Locobot
 
   class Robot
 
+    include STATUS
+
     def initialize
-      @status = STATUS::READY
+      @status = READY
     end
 
-    attr_accessor :placement, :table, :error
+    attr_accessor :status, :placement, :table, :error
 
     def execute command
-        command, *args = command.split(/[ ,]/)
-        if Locobot::COMMANDS.constants.include? command.to_sym
-          unless no_table?
-            self.send command.downcase, *args
-          end
-        else
-          self.error = STATUS::UNRECOGNISED_COMMAND and nil
+      command, *args = command.split(/[ ,]/)
+      if COMMANDS.constants.include? command.to_sym
+        unless no_table?
+          self.send command.downcase, *args
         end
+      else
+        self.error = UNRECOGNISED_COMMAND and nil
+      end
     end
 
     def shutting_down?
-      self.status == STATUS::SHUTTINGDOWN
+      self.status == SHUTTINGDOWN
     end
 
     private
@@ -53,20 +56,20 @@ module Locobot
 
       # Describe acceptable robot commands
       def help
-        Locobot::COMMANDS.constants.map do |command|
+        COMMANDS.constants.map do |command|
           "#{command}\t#{COMMANDS.const_get command}"
         end.join "\n"
       end
 
       def place x = nil, y = nil, orientation = nil
         placement = Placement.new x, y, orientation
-        self.error = STATUS::INVALID_PLACEMENT and return unless placement.valid?
+        self.error = INVALID_PLACEMENT and return unless placement.valid?
 
         if table.coordinate_exists? placement.x, placement.y
           self.placement = placement
-          self.status = STATUS::COMMAND_SUCCESSFUL
+          self.status = COMMAND_SUCCESSFUL
         else
-          self.error = STATUS::MOVEMENT_IMPOSSIBLE and nil
+          self.error = MOVEMENT_IMPOSSIBLE and nil
         end
       end
 
@@ -74,26 +77,31 @@ module Locobot
         return unless check_placement
         if new_placement = self.table.cell_to(self.placement)
           self.placement = new_placement
-          self.status = STATUS::COMMAND_SUCCESSFUL
+          self.status = COMMAND_SUCCESSFUL
         else
-          self.error = STATUS::MOVEMENT_IMPOSSIBLE and nil
+          self.error = MOVEMENT_IMPOSSIBLE and nil
         end
       end
 
       def left
         return unless check_placement
         self.placement.turn_left
-        STATUS::COMMAND_SUCCESSFUL
+        COMMAND_SUCCESSFUL
       end
 
       def right
         return unless check_placement
         self.placement.turn_right
-        STATUS::COMMAND_SUCCESSFUL
+        COMMAND_SUCCESSFUL
       end
 
       def report
         check_placement and "#{table.to_s(placement)}#{placement}"
+      end
+
+      def exit
+        self.status = SHUTTINGDOWN
+        COMMAND_SUCCESSFUL
       end
 
       # Internal methods
@@ -103,19 +111,15 @@ module Locobot
         if self.table
           false
         else
-          self.error = STATUS::NO_TABLE
+          self.error = NO_TABLE
           true
         end
-      end
-
-      def parse_orientation string
-        false
       end
 
       # Sets status to NOT_PLACED unless placed
       def check_placement
         unless self.placement and self.placement.valid?
-          self.error = STATUS::NOT_PLACED and return
+          self.error = NOT_PLACED and return
         else
           true
         end
@@ -123,7 +127,7 @@ module Locobot
 
       # Hangle unrecognised commands
       def method_missing *a
-        self.error = STATUS::UNRECOGNISED_COMMAND
+        self.error = UNRECOGNISED_COMMAND
       end
 
   end

@@ -29,6 +29,13 @@ def prompt
   end
 
   prompt unless @locobot.shutting_down?
+
+  sleep 0.3
+  say coloured('POWERING DOWN MOTORS...', :RED)
+  sleep 0.2
+  say coloured('FLUSHING DATABANKS...', :RED)
+  sleep 0.4
+  say coloured('GOOD BYE', :GREEN)
 end
 
 say coloured('LOCOBOT INITIALIZING ', :RED)
