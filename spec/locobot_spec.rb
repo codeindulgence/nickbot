@@ -58,7 +58,7 @@ describe Locobot do
     it "has a position and orientation" do
       x, y, orientation = [0, 0, NORTH]
       @locobot.table = Table.new 5, 5
-      @locobot.execute("PLACE #{x} #{y} NORTH")
+      @locobot.execute("PLACE #{x} #{y} NORTH").wont_be_nil
       @locobot.placement.x.must_equal x
       @locobot.placement.y.must_equal y
       @locobot.placement.orientation.must_equal orientation
@@ -67,8 +67,18 @@ describe Locobot do
     it "can report it's position" do
       x, y, orientation = [2, 4, 'WEST']
       @locobot.table = Table.new 5, 5
-      @locobot.execute("PLACE #{x} #{y} #{orientation}")
+      @locobot.execute("PLACE #{x} #{y} #{orientation}").wont_be_nil
       @locobot.execute('REPORT').must_equal "CURRENT POSITION: #{x},#{y}\nFACING: #{orientation}"
+    end
+
+    it "can move if possible" do
+      @locobot.table = Table.new 5, 5
+      @locobot.execute("PLACE 0 0 EAST").wont_be_nil
+      @locobot.execute('MOVE').must_equal COMMAND_SUCCESSFUL
+      @locobot.placement.must_equal Placement.new(1, 0, EAST)
+      @locobot.execute("PLACE 0 0 WEST").wont_be_nil
+      @locobot.execute('MOVE').must_be_nil
+      @locobot.error.must_equal MOVEMENT_IMPOSSIBLE
     end
   end
 

@@ -16,7 +16,7 @@ module Locobot
       @x = x.to_i if x.to_s =~ /\d+/
       @y = y.to_i if y.to_s =~ /\d+/
       ORIENTATIONS.constants.each do |o|
-        if o.to_s == orientation
+        if o.to_s == orientation.to_s
           @orientation = o
         end
       end
@@ -27,6 +27,10 @@ module Locobot
         CURRENT POSITION: #{x},#{y}
         FACING: #{orientation}
       EOS
+    end
+
+    def == object
+      self.to_s == object.to_s
     end
 
     def valid?

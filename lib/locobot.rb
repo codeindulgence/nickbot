@@ -43,7 +43,7 @@ module Locobot
     end
 
     def shutting_down?
-      @status == STATUS::SHUTTINGDOWN
+      self.status == STATUS::SHUTTINGDOWN
     end
 
     private
@@ -63,14 +63,20 @@ module Locobot
 
         if table.coordinate_exists? placement.x, placement.y
           self.placement = placement
-          @status = STATUS::COMMAND_SUCCESSFUL
+          self.status = STATUS::COMMAND_SUCCESSFUL
         else
           self.error = STATUS::MOVEMENT_IMPOSSIBLE and nil
         end
       end
 
       def move
-        check_placement
+        return unless check_placement
+        if new_placement = self.table.cell_to(self.placement)
+          self.placement = new_placement
+          self.status = STATUS::COMMAND_SUCCESSFUL
+        else
+          self.error = STATUS::MOVEMENT_IMPOSSIBLE and nil
+        end
       end
 
       def left
@@ -89,7 +95,7 @@ module Locobot
 
       # Sets status to NO_TABLE if there's no table
       def no_table?
-        if @table
+        if self.table
           false
         else
           self.error = STATUS::NO_TABLE

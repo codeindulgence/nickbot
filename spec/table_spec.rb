@@ -25,16 +25,16 @@ describe Table do
   describe "when asked about adjacent cells" do
     it "returns correct results" do
       table = Table.new 5, 5
-      table.north_of(0, 0).must_equal [0, 1]
+      table.north_of(0, 0).must_equal Placement.new(0, 1, ORIENTATIONS::NORTH)
       table.north_of(0, 4).must_be_nil
 
-      table.east_of(0, 0).must_equal [1, 0]
+      table.east_of(0, 0).must_equal Placement.new(1, 0, ORIENTATIONS::EAST)
       table.east_of(4, 0).must_be_nil
 
-      table.south_of(4, 4).must_equal [4, 3]
+      table.south_of(4, 4).must_equal Placement.new(4, 3, ORIENTATIONS::SOUTH)
       table.south_of(0, 0).must_be_nil
 
-      table.west_of(4, 0).must_equal [3, 0]
+      table.west_of(4, 0).must_equal Placement.new(3, 0, ORIENTATIONS::WEST)
       table.west_of(0, 0).must_be_nil
     end
   end
