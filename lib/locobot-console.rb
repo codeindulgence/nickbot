@@ -21,6 +21,7 @@ def prompt
     response = @locobot.execute(command)
 
     if response
+      say @locobot.table.to_s @locobot.placement
       say coloured("#{response}", :GREEN)
     else
       say coloured("ERROR: #{@locobot.error}", :RED)
