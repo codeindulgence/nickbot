@@ -80,6 +80,29 @@ describe Locobot do
       @locobot.execute('MOVE').must_be_nil
       @locobot.error.must_equal MOVEMENT_IMPOSSIBLE
     end
+
+    it "can turn" do
+      @locobot.table = Table.new 5, 5
+      @locobot.execute("PLACE 0 0 NORTH").wont_be_nil
+
+      @locobot.execute("RIGHT").wont_be_nil
+      @locobot.placement.orientation.must_equal EAST
+      @locobot.execute("RIGHT").wont_be_nil
+      @locobot.placement.orientation.must_equal SOUTH
+      @locobot.execute("RIGHT").wont_be_nil
+      @locobot.placement.orientation.must_equal WEST
+      @locobot.execute("RIGHT").wont_be_nil
+      @locobot.placement.orientation.must_equal NORTH
+
+      @locobot.execute("LEFT").wont_be_nil
+      @locobot.placement.orientation.must_equal WEST
+      @locobot.execute("LEFT").wont_be_nil
+      @locobot.placement.orientation.must_equal SOUTH
+      @locobot.execute("LEFT").wont_be_nil
+      @locobot.placement.orientation.must_equal EAST
+      @locobot.execute("LEFT").wont_be_nil
+      @locobot.placement.orientation.must_equal NORTH
+    end
   end
 
 end

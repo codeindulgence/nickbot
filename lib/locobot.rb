@@ -80,11 +80,13 @@ module Locobot
       end
 
       def left
-        check_placement
+        return unless check_placement
+        self.placement.turn_left
       end
 
       def right
-        check_placement
+        return unless check_placement
+        self.placement.turn_right
       end
 
       def report

@@ -39,5 +39,17 @@ module Locobot
       !@orientation.nil?
     end
 
+    def turn_right
+      new_index = ORIENTATIONS.constants.index(self.orientation) + 1
+      self.orientation = (ORIENTATIONS.constants[new_index] or NORTH)
+      self
+    end
+
+    def turn_left
+      new_index = ORIENTATIONS.constants.index(self.orientation) - 1
+      self.orientation = ORIENTATIONS.constants[new_index]
+      self
+    end
+
   end
 end
