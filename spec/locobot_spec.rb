@@ -2,7 +2,6 @@
 
 require 'minitest/spec'
 require 'minitest/autorun'
-require 'debugger'
 
 require './lib/placement'
 require './lib/table'

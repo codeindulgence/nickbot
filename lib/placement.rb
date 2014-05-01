@@ -1,4 +1,3 @@
-require 'debugger'
 module Locobot
 
   module ORIENTATIONS
