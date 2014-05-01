@@ -10,7 +10,7 @@ require File.expand_path('../../lib/table',  __FILE__)
 def prompt
   command = ask("<%= color('LOCOBOT AWAITING COMMAND> ', BLUE) %>") { |q| q.case = :upcase }
 
-  puts((@locobot.execute(command) or "ERROR: #{@locobot.error}"))
+  puts((@locobot.execute(command) or "ERROR: #{@locobot.error}")) unless command.empty?
 
   prompt unless @locobot.shutting_down?
 end
