@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'debugger'
@@ -68,7 +70,20 @@ describe Locobot do
       x, y, orientation = [2, 4, 'WEST']
       @locobot.table = Table.new 5, 5
       @locobot.execute("PLACE #{x} #{y} #{orientation}").wont_be_nil
-      @locobot.execute('REPORT').must_equal "CURRENT POSITION: #{x},#{y}\nFACING: #{orientation}"
+      table = %Q(
+╔═══╤═══╤═══╤═══╤═══╗
+║   │   │ ◀ │   │   ║
+╟───┼───┼───┼───┼───╢
+║   │   │   │   │   ║
+╟───┼───┼───┼───┼───╢
+║   │   │   │   │   ║
+╟───┼───┼───┼───┼───╢
+║   │   │   │   │   ║
+╟───┼───┼───┼───┼───╢
+║   │   │   │   │   ║
+╚═══╧═══╧═══╧═══╧═══╝
+)
+      @locobot.execute('REPORT').must_equal table + "CURRENT POSITION: #{x},#{y}\nFACING: #{orientation}"
     end
 
     it "can move if possible" do
