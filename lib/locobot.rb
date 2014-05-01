@@ -93,7 +93,7 @@ module Locobot
       end
 
       def report
-        check_placement and placement.to_s
+        check_placement and "#{table.to_s(placement)}#{placement}"
       end
 
       # Internal methods

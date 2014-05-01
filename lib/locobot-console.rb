@@ -1,5 +1,4 @@
 require 'highline/import'
-require 'debugger'
 
 require File.expand_path('../../lib/locobot',  __FILE__)
 require File.expand_path('../../lib/table',  __FILE__)
@@ -12,18 +11,17 @@ def coloured string, colour
 end
 
 def prompt
+  puts
   command = ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) do |q|
     q.case = :upcase
     q.readline = true
   end
-
-  puts `clear`
+  puts
 
   unless command.empty?
     response = @locobot.execute(command)
 
     if response
-      say @locobot.table.to_s(@locobot.placement) if @locobot.placement
       say coloured("#{response}", :GREEN)
     else
       say coloured("ERROR: #{@locobot.error}", :RED)
