@@ -83,11 +83,13 @@ module Locobot
       def left
         return unless check_placement
         self.placement.turn_left
+        STATUS::COMMAND_SUCCESSFUL
       end
 
       def right
         return unless check_placement
         self.placement.turn_right
+        STATUS::COMMAND_SUCCESSFUL
       end
 
       def report
