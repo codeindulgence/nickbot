@@ -1,12 +1,17 @@
 Welcome to Locobot!
 ===================
 
-By Nick Butler  
+By Nick Butler
 nick@codeindulgence.com
 
-The only dependency is highline for the CLI
-so a bundle install might be necessary
+Ruby 1.9+ required
+Tested using 1.9.3, 2.0.0 and 2.1.1
 
-Other than that, just run ./bin/locobot
+The only dependency is highline for the CLI
+so you might need to:
+  $ bundle install
+
+Other than that, just run:
+  $ ./bin/locobot
 
 Enjoy!
