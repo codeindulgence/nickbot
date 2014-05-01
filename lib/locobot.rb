@@ -5,7 +5,8 @@ module Locobot
 
   module COMMANDS
     HELP   = 'List available commands'
-    PLACE  = 'Set robots positions'
+    PLACE  = "Set robot's position. Syntax: X,Y,F"+"\n"+
+     "        F can be one of: NORTH, SOUTH, EAST or WEST"
     MOVE   = 'Move forward in current direction'
     LEFT   = 'Rotate 90 degrees left'
     RIGHT  = 'Rotate 90 degrees right'
