@@ -14,12 +14,14 @@ end
 def prompt
   command = ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) { |q| q.case = :upcase }
 
-  response = @locobot.execute command
+  unless command.empty?
+    response = @locobot.execute(command)
 
-  if response
-    say coloured("#{response}", :GREEN)
-  else
-    say coloured("ERROR: #{@locobot.error}", :RED)
+    if response
+      say coloured("#{response}", :GREEN)
+    else
+      say coloured("ERROR: #{@locobot.error}", :RED)
+    end
   end
 
   prompt unless @locobot.shutting_down?
