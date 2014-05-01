@@ -7,10 +7,20 @@ require File.expand_path('../../lib/table',  __FILE__)
 @locobot = Locobot::Robot.new
 @locobot.table = Table.new 5, 5
 
-def prompt
-  command = ask("<%= color('LOCOBOT AWAITING COMMAND> ', BLUE) %>") { |q| q.case = :upcase }
+def coloured string, colour
+  "<%= color(\"#{string}\", #{colour}) %>"
+end
 
-  puts((@locobot.execute(command) or "ERROR: #{@locobot.error}")) unless command.empty?
+def prompt
+  command = ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) { |q| q.case = :upcase }
+
+  response = @locobot.execute command
+
+  if response
+    say coloured("#{response}", :GREEN)
+  else
+    say coloured("ERROR: #{@locobot.error}", :RED)
+  end
 
   prompt unless @locobot.shutting_down?
 end
