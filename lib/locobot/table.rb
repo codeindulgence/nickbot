@@ -8,18 +8,20 @@ include Locobot::ORIENTATIONS
 module Locobot
   # Define a table with a width and height. Outputs an ASCII grid when cast as
   # a string. Can return Placements when asked for adjacent cells
+  # @author Nick Butler
+  # @attr [Integer] width number of cells wide
+  # @attr [Integer] height number of cells high
   class Table
     attr_accessor :width, :height
 
-    # Parameters
-    # width: Fixnum
-    # height: Fixnum
     def initialize(width, height)
       @width = width
       @height = height
     end
 
-    # Output as grid with optional Placement
+    # Output as grid with optional (Locobot::Placement)
+    # @param optional (Locobot::Placement) coordinate and orientation
+    # @return [String] ascii representation of table with optional marked cell
     def to_s(placement = nil)
       if placement.is_a? Placement
         @x = placement.x
@@ -34,37 +36,46 @@ module Locobot
       bottom_border
     end
 
-    # No arguments
-    # Returns String of format "<width>x<height>"
     def size
       "#{@width}x#{@height}"
     end
 
-    # Returns true unless given coords are out of bounds
     def coordinate_exists?(x, y)
       x < @width && y < @height
     end
 
-    # Expects Placement
-    # Returns new placement or nil
+    # Dynamic wrapper for directional commands below
+    # @param [Locobot::Placement] placement as starting point
+    # @return [Locobot::Placement, nil] new placement in direction of given
+    #   placement if new placement is not out of the table's bounds,
+    #   otherwise nil
     def cell_to(placement)
       send("#{placement.orientation.downcase}_of", placement.x, placement.y)
     end
 
     # The following methods accept x and y coordinates and return a Placement
     # or nil if out of bounds.
+    # @param [Integer] x coordinate
+    # @param [Integer] y coordinate
+    # @return (see Locobot::Table#cell_to)
     def north_of(x, y)
       Placement.new(x, y + 1, NORTH) unless y + 1 == @height
     end
 
+    # @param (see Locobot::Table#north_of)
+    # @return (see Locobot::Table#cell_to)
     def east_of(x, y)
       Placement.new(x + 1, y, EAST) unless x + 1 == @width
     end
 
+    # @param (see Locobot::Table#north_of)
+    # @return (see Locobot::Table#cell_to)
     def south_of(x, y)
       Placement.new(x, y - 1, SOUTH) unless y - 1 < 0
     end
 
+    # @param (see Locobot::Table#north_of)
+    # @return (see Locobot::Table#cell_to)
     def west_of(x, y)
       Placement.new(x - 1, y, WEST) unless x - 1 < 0
     end
@@ -72,12 +83,15 @@ module Locobot
     private
 
     # Methods to return parts of the ASCII grid
-
+    # @private
+    # @return [String] part of the ascii grid
     def top_border
       "\n" + '╔' + ('═══╤' * (width - 1)) + '═══╗' + "\n" +
              '║'
     end
 
+    # @private
+    # @return (see Locobot::Table#top_border)
     def first_row
       str = ''
       (width - 1).times do |column|
@@ -87,11 +101,15 @@ module Locobot
       str
     end
 
+    # @private
+    # @return (see Locobot::Table#top_border)
     def top_right_corner
       a_pointer = (@x == (width - 1) && @y == (height - 1)) ? @pointer :  ' '
       " #{a_pointer} ║" + "\n"
     end
 
+    # @private
+    # @return (see Locobot::Table#top_border)
     def additional_rows
       str = ''
       (height - 1).times do |row|
@@ -103,6 +121,9 @@ module Locobot
       str
     end
 
+    # @private
+    # @param [Integer] any given row to test against a given coordinate
+    # @return (see Locobot::Table#top_border)
     def additional_cells(row)
       str = ''
       (width - 1).times do |column|
@@ -112,11 +133,16 @@ module Locobot
       str
     end
 
+    # @private
+    # @param (see Locobot::Table#additional_cells
+    # @return (see Locobot::Table#top_border)
     def bottom_right(row)
       pointer = @x == (width - 1) && @y == (height - row - 2) ? @pointer : ' '
       " #{pointer} ║" + "\n"
     end
 
+    # @private
+    # @return (see Locobot::Table#top_border)
     def bottom_border
       '╚' + ('═══╧' * (width - 1)) + '═══╝' + "\n"
     end

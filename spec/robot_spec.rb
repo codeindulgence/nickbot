@@ -14,16 +14,16 @@ describe Robot do
   end
 
   describe 'when given an unrecognised command' do
-    it 'gives an error' do
+    it 'returns nil and sets status' do
       @locobot.execute('UNRECOGNISED').must_be_nil
-      @locobot.error.must_equal UNRECOGNISED_COMMAND
+      @locobot.status.must_equal UNRECOGNISED_COMMAND
     end
   end
 
   describe 'when placed without a table' do
     it 'tells me it needs a tabletop' do
       @locobot.execute('PLACE 0,0,NORTH').must_be_nil
-      @locobot.error.must_equal NO_TABLE
+      @locobot.status.must_equal NO_TABLE
     end
   end
 
@@ -31,16 +31,16 @@ describe Robot do
     it 'tells me it has not been placed' do
       @locobot.table = Table.new 5, 5
       @locobot.execute('MOVE').must_be_nil
-      @locobot.error.must_equal NOT_PLACED
+      @locobot.status.must_equal NOT_PLACED
 
       @locobot.execute('LEFT').must_be_nil
-      @locobot.error.must_equal NOT_PLACED
+      @locobot.status.must_equal NOT_PLACED
 
       @locobot.execute('RIGHT').must_be_nil
-      @locobot.error.must_equal NOT_PLACED
+      @locobot.status.must_equal NOT_PLACED
 
       @locobot.execute('REPORT').must_be_nil
-      @locobot.error.must_equal NOT_PLACED
+      @locobot.status.must_equal NOT_PLACED
     end
   end
 
@@ -90,7 +90,7 @@ describe Robot do
       @locobot.placement.must_equal Placement.new(1, 0, EAST)
       @locobot.execute('PLACE 0,0,WEST').wont_be_nil
       @locobot.execute('MOVE').must_be_nil
-      @locobot.error.must_equal MOVEMENT_IMPOSSIBLE
+      @locobot.status.must_equal MOVEMENT_IMPOSSIBLE
     end
 
     it 'can turn' do

@@ -1,14 +1,19 @@
 require 'highline/import'
-
 require File.expand_path('../../lib/locobot/robot',  __FILE__)
 
+# Initialise our robot
 @locobot = Locobot::Robot.new
 @locobot.table = Table.new 5, 5
 
+# Convenience method for coloured output
+# @param [String] string to output
+# @param [Symbol] colour for output
+# @return [String] ERB string for coloured output
 def coloured(string, colour)
   "<%= color(\"#{string}\", #{colour}) %>"
 end
 
+# Actually prompt the user for a command
 def ask_for_command
   ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) do |q|
     q.case = :upcase
@@ -16,19 +21,26 @@ def ask_for_command
   end
 end
 
+# Initiate the prompt process and hendle the given input
 def prompt
   command = ask_for_command
   unless command.empty?
+    # Give the command to locobot
     response = @locobot.execute(command)
     if response
+      # Print locobot's response
       say coloured("#{response}", :GREEN)
     else
-      say coloured("ERROR: #{@locobot.error}", :RED)
+      # Print locobot's status if response is nil
+      say coloured("ERROR: #{@locobot.status}", :RED)
     end
   end
 
+  # Unless locobot is shutting down, ask for another command
   @locobot.shutting_down? ? shutdown : prompt
 end
+
+# Locobot telling us what's going (it might be lying)
 
 def shutdown
   sleep 0.3
