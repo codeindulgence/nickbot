@@ -32,6 +32,8 @@ module Locobot
       else
         (@status = UNRECOGNISED_COMMAND) && nil
       end
+    rescue
+        (@status = INVALID_COMMAND_FORMAT) && nil
     end
 
     def shutting_down?

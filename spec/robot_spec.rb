@@ -17,6 +17,11 @@ describe Robot do
     it 'returns nil and sets status' do
       @locobot.execute('UNRECOGNISED').must_be_nil
       @locobot.status.must_equal UNRECOGNISED_COMMAND
+      @locobot.table = Table.new 5, 5
+      @locobot.execute('MOVE 1').must_be_nil
+      @locobot.status.must_equal INVALID_COMMAND_FORMAT
+      @locobot.execute('PLACE 1 1 NORTH x').must_be_nil
+      @locobot.status.must_equal INVALID_COMMAND_FORMAT
     end
   end
 
