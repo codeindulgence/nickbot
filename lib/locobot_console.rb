@@ -4,7 +4,7 @@ require File.expand_path('../../lib/locobot/robot',  __FILE__)
 # Initialise our robot
 @locobot = Locobot::Robot.new
 begin
-  @locobot.table = Table.new(*$*)
+  @locobot.table = Table.new(*ARGV)
 rescue
   puts 'Invalid table dimensions'
   puts 'Accepts two numbers greater than zero.'
