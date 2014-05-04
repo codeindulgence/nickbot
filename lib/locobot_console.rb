@@ -3,7 +3,13 @@ require File.expand_path('../../lib/locobot/robot',  __FILE__)
 
 # Initialise our robot
 @locobot = Locobot::Robot.new
-@locobot.table = Table.new 5, 5
+begin
+  @locobot.table = Table.new(*$*)
+rescue
+  puts 'Invalid table dimensions'
+  puts 'Accepts two numbers greater than zero.'
+  exit
+end
 
 # Convenience method for coloured output
 # @param [String] string to output

@@ -14,9 +14,11 @@ module Locobot
   class Table
     attr_accessor :width, :height
 
-    def initialize(width, height)
-      @width = width
-      @height = height
+    def initialize(width = 5, height = 5)
+      @width = width.to_i
+      @height = height.to_i
+
+      throw 'Table dimensions must be greater than 0' unless volume > 0
     end
 
     # Output as grid with optional (Locobot::Placement)
@@ -38,6 +40,10 @@ module Locobot
 
     def size
       "#{@width}x#{@height}"
+    end
+
+    def volume
+      @width * @height
     end
 
     def coordinate_exists?(x, y)

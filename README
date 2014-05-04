@@ -17,6 +17,9 @@ Run tests with:
 Other than that, just run:
   $ ./bin/locobot
 
+One may also supply table dimensions when launching the CLI:
+  $ ./bin/locobot 8 5
+
 Locobot will start up and print out the following help:
   HELP   List available commands
   PLACE  Set robot's position. Syntax: X,Y,F
