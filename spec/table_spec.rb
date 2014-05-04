@@ -1,20 +1,19 @@
 # encoding: UTF-8
 require 'minitest/spec'
 require 'minitest/autorun'
-
-require './lib/table'
+require './lib/locobot/table'
 
 describe Table do
 
-  describe "when created" do
-    it "has a size" do
+  describe 'when created' do
+    it 'has a size' do
       table = Table.new 5, 5
       table.size.must_equal '5x5'
     end
   end
 
-  describe "when asked about a given cell" do
-    it "tells me if that cell exists" do
+  describe 'when asked about a given cell' do
+    it 'tells me if that cell exists' do
       table = Table.new 5, 5
       table.coordinate_exists?(0, 0).must_equal true
       table.coordinate_exists?(2, 3).must_equal true
@@ -23,8 +22,8 @@ describe Table do
     end
   end
 
-  describe "when asked about adjacent cells" do
-    it "returns correct results" do
+  describe 'when asked about adjacent cells' do
+    it 'returns correct results' do
       table = Table.new 5, 5
       table.north_of(0, 0).must_equal Placement.new(0, 1, ORIENTATIONS::NORTH)
       table.north_of(0, 4).must_be_nil
@@ -40,8 +39,8 @@ describe Table do
     end
   end
 
-  describe "when converted to a string" do
-    it "returns an ASCII grid" do
+  describe 'when converted to a string' do
+    it 'returns an ASCII grid' do
       Table.new(1, 1).to_s.must_equal <<-EOS
 
 ╔═══╗
@@ -88,8 +87,8 @@ describe Table do
     end
   end
 
-  describe "when converted to a string with a coordinate" do
-    it "returns an ASCII grid marking the coordinate" do
+  describe 'when converted to a string with a coordinate' do
+    it 'returns an ASCII grid marking the coordinate' do
       Table.new(1, 1).to_s(Placement.new(0, 0, EAST)).must_equal <<-EOS
 
 ╔═══╗

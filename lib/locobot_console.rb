@@ -1,26 +1,25 @@
 require 'highline/import'
 
-require File.expand_path('../../lib/locobot',  __FILE__)
-require File.expand_path('../../lib/table',  __FILE__)
+require File.expand_path('../../lib/locobot/robot',  __FILE__)
 
 @locobot = Locobot::Robot.new
 @locobot.table = Table.new 5, 5
 
-def coloured string, colour
+def coloured(string, colour)
   "<%= color(\"#{string}\", #{colour}) %>"
 end
 
-def prompt
-  puts
-  command = ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) do |q|
+def ask_for_command
+  ask(coloured('LOCOBOT AWAITING COMMAND> ', :BLUE)) do |q|
     q.case = :upcase
     q.readline = true
   end
-  puts
+end
 
+def prompt
+  command = ask_for_command
   unless command.empty?
     response = @locobot.execute(command)
-
     if response
       say coloured("#{response}", :GREEN)
     else
@@ -28,15 +27,16 @@ def prompt
     end
   end
 
-  prompt unless @locobot.shutting_down?
+  @locobot.shutting_down? ? shutdown : prompt
+end
 
+def shutdown
   sleep 0.3
   say coloured('POWERING DOWN MOTORS...', :RED)
   sleep 0.2
   say coloured('FLUSHING DATABANKS...', :RED)
   sleep 0.4
   say coloured('GOOD BYE', :GREEN)
-
   exit
 end
 
