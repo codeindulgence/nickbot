@@ -11,7 +11,36 @@ The only dependency is highline for the CLI
 so you might need to:
   $ bundle install
 
+Run tests with:
+  $ rake test
+
 Other than that, just run:
   $ ./bin/locobot
+
+Locobot will start up and print out the following help:
+  HELP   List available commands
+  PLACE  Set robot's position. Syntax: X,Y,F
+         F can be one of: NORTH, SOUTH, EAST or WEST
+  MOVE   Move forward in current direction
+  LEFT   Rotate 90 degrees left
+  RIGHT  Rotate 90 degrees right
+  REPORT Announce current position and orientation
+  EXIT   Shut down Locobot
+
+The first command that should be issued is PLACE, example:
+  > PLACE 2,4,WEST
+
+Once placed we can issue commands: MOVE, LEFT, RIGHT and REPORT.
+Otherwise these commands will fail.
+
+Movement and turn commands will simply tell us if they were successful.
+To find out more about the current position, issue the report command:
+  > REPORT
+
+This will output a visual representation of the table and the robot's
+current position.
+
+Once one has had their way with locobot, one may issue the exit command:
+  > EXIT
 
 Enjoy!
