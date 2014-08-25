@@ -1,4 +1,4 @@
-Welcome to Locobot!
+Welcome to Nickbot!
 ===================
 
 By Nick Butler
@@ -15,12 +15,12 @@ Run tests with:
   $ rake test
 
 Other than that, just run:
-  $ ./bin/locobot
+  $ ./bin/nickbot
 
 One may also supply table dimensions when launching the CLI:
-  $ ./bin/locobot 8 5
+  $ ./bin/nickbot 8 5
 
-Locobot will start up and print out the following help:
+Nickbot will start up and print out the following help:
   HELP   List available commands
   PLACE  Set robot's position. Syntax: X,Y,F
          F can be one of: NORTH, SOUTH, EAST or WEST
@@ -28,7 +28,7 @@ Locobot will start up and print out the following help:
   LEFT   Rotate 90 degrees left
   RIGHT  Rotate 90 degrees right
   REPORT Announce current position and orientation
-  EXIT   Shut down Locobot
+  EXIT   Shut down Nickbot
 
 The first command that should be issued is PLACE, example:
   > PLACE 2,4,WEST
@@ -43,7 +43,7 @@ To find out more about the current position, issue the report command:
 This will output a visual representation of the table and the robot's
 current position.
 
-Once one has had their way with locobot, one may issue the exit command:
+Once one has had their way with nickbot, one may issue the exit command:
   > EXIT
 
 Enjoy!

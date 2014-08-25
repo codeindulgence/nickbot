@@ -1,10 +1,10 @@
 require 'highline/import'
-require File.expand_path('../../lib/locobot/robot',  __FILE__)
+require File.expand_path('../../lib/nickbot/robot',  __FILE__)
 
 # Initialise our robot
-@locobot = Locobot::Robot.new
+@nickbot = Nickbot::Robot.new
 begin
-  @locobot.table = Table.new(*ARGV)
+  @nickbot.table = Table.new(*ARGV)
 rescue
   puts 'Invalid table dimensions'
   puts 'Accepts two numbers greater than zero.'
@@ -31,22 +31,22 @@ end
 def prompt
   command = ask_for_command
   unless command.empty?
-    # Give the command to locobot
-    response = @locobot.execute(command)
+    # Give the command to nickbot
+    response = @nickbot.execute(command)
     if response
-      # Print locobot's response
+      # Print nickbot's response
       say coloured("#{response}", :GREEN)
     else
-      # Print locobot's status if response is nil
-      say coloured("ERROR: #{@locobot.status}", :RED)
+      # Print nickbot's status if response is nil
+      say coloured("ERROR: #{@nickbot.status}", :RED)
     end
   end
 
-  # Unless locobot is shutting down, ask for another command
-  @locobot.shutting_down? ? shutdown : prompt
+  # Unless nickbot is shutting down, ask for another command
+  @nickbot.shutting_down? ? shutdown : prompt
 end
 
-# Locobot telling us what's going (it might be lying)
+# Nickbot telling us what's going (it might be lying)
 
 def shutdown
   sleep 0.3
@@ -69,6 +69,6 @@ sleep 1
 say 'PLEASE OBSERVE COMMANDS LIST:'
 sleep 0.2
 
-say coloured(@locobot.execute('HELP'), :GREEN)
+say coloured(@nickbot.execute('HELP'), :GREEN)
 
 prompt

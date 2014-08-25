@@ -1,7 +1,7 @@
 require 'minitest/spec'
 require 'minitest/autorun'
-require './lib/locobot/placement'
-include Locobot
+require './lib/nickbot/placement'
+include Nickbot
 
 describe Placement do
 

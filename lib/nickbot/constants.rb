@@ -1,5 +1,5 @@
-# Locobot Module
-module Locobot
+# Nickbot Module
+module Nickbot
   # Command descriptions
   module COMMANDS
     HELP   = 'List available commands'
@@ -9,7 +9,7 @@ module Locobot
     LEFT   = 'Rotate 90 degrees left'
     RIGHT  = 'Rotate 90 degrees right'
     REPORT = 'Announce current position and orientation'
-    EXIT   = 'Shut down Locobot'
+    EXIT   = 'Shut down Nickbot'
   end
 
   # Status Constants

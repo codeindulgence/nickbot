@@ -1,16 +1,16 @@
 # encoding: UTF-8
 
-require './lib/locobot/constants'
-include Locobot
-include Locobot::ORIENTATIONS
+require './lib/nickbot/constants'
+include Nickbot
+include Nickbot::ORIENTATIONS
 
-module Locobot
+module Nickbot
   # Container for a co-ordinate and orientation. Includes turn methods to
   # modify the orientation
   # @author Nick Butler
   # @attr [Integer] x number off cells wide
   # @attr [Integer] y number off cells high
-  # @attr [String] orientation from (Locobot::ORIENTATIONS)
+  # @attr [String] orientation from (Nickbot::ORIENTATIONS)
   class Placement
     attr_accessor :x, :y, :orientation
 
@@ -41,7 +41,7 @@ module Locobot
 
     # Test if given attributes are valid
     # @return [Boolean] true if coordinates are numbers and orintation is one
-    #   of (Locobot::ORIENTATIONS)
+    #   of (Nickbot::ORIENTATIONS)
     def valid?
       @x.is_a?(Integer) &&
       @y.is_a?(Integer) &&
@@ -62,14 +62,14 @@ module Locobot
       end
     end
 
-    # @return [Locobot::Placement] after modifying orientation
+    # @return [Nickbot::Placement] after modifying orientation
     def turn_right
       new_index = ORIENTATIONS.constants.index(orientation) + 1
       self.orientation = (ORIENTATIONS.constants[new_index] || NORTH)
       self
     end
 
-    # (Locobot::Placement#turn_right)
+    # (Nickbot::Placement#turn_right)
     def turn_left
       new_index = ORIENTATIONS.constants.index(orientation) - 1
       self.orientation = ORIENTATIONS.constants[new_index]
